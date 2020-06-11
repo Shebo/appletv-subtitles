@@ -189,20 +189,32 @@ function fetchAndSetData(){
 
 function waitUntilExists(callback){
 
-    selectors = ['table.dataTable', '.info-box', '.main-footer'];
+    selectors = ['.dataTable', '.info-box', '.main-footer'];
 
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
-            console.log('printprint!!!');
             if (!mutation.addedNodes) return
 
-            console.log('existy111112!!!');
             for (var i = 0; i < mutation.addedNodes.length; i++) {
                 // do things to your newly added nodes here
                 var node = mutation.addedNodes[i];
-                console.log('existy!!!');
-                console.log(node);
-                callback();
+                if( !$(node).hasClass(selectors[0]) && $(node).hasClass(selectors[1]) && $(node).hasClass(selectors[2]) ){
+                    continue;
+                }
+
+                var elArr = []
+
+                for (let i = 0; i < selectors.length; i++) {
+                    var el = $(selectors[i])
+                    if( !el.length ){
+                        elArr.push(el);
+                    }
+                }
+
+                if( !elArr.length ){
+                    observer.disconnect();
+                    callback();
+                }
             }
         })
     });
