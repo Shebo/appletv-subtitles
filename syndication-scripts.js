@@ -281,10 +281,7 @@ function listenToChanges(callback){
         });
 
         $('#export-by-sites').on('click', function(e){
-            e.stopPropagation();
-            e.preventDefault();
             exportData();
-            return false;
         });
 
     });
