@@ -198,7 +198,7 @@ function waitUntilExists(callback){
             for (var i = 0; i < mutation.addedNodes.length; i++) {
                 // do things to your newly added nodes here
                 var node = mutation.addedNodes[i];
-                if( !$(node).hasClass(selectors[0]) && $(node).hasClass(selectors[1]) && $(node).hasClass(selectors[2]) ){
+                if( !$(node).hasClass(selectors[0]) && !$(node).hasClass(selectors[1]) && !$(node).hasClass(selectors[2]) ){
                     continue;
                 }
 
@@ -212,8 +212,10 @@ function waitUntilExists(callback){
                 }
 
                 if( !elArr.length ){
+                    console.log(observer);
                     observer.disconnect();
                     callback();
+                    break;
                 }
             }
         })
