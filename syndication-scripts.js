@@ -155,16 +155,24 @@ function createCSV(rows){
     return encodedUri;
 }
 
-function createButton(encodedUri){
+function downloadCSV(encodedUri){
 
     var date = new Date(Date.now());
     var timestamp = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 
+    var hiddenElement = document.createElement("a");
+    hiddenElement.setAttribute("href", encodedUri);
+    hiddenElement.setAttribute("target", '_blank');
+    hiddenElement.setAttribute("download", "syndication_sites_totals_"+timestamp+".csv");
+    hiddenElement.click();
+}
+
+function drawButton(){
     var link = document.createElement("a");
     link.innerHTML = 'Export By Sites';
-    link.setAttribute("id", 'special');
+    link.setAttribute("id", 'export-by-sites');
     link.setAttribute("class", 'btn btn-lg btn-primary');
-    link.setAttribute("href", encodedUri);
+    link.setAttribute("href", '');
     link.setAttribute("download", "syndication_sites_totals_"+timestamp+".csv");
     document.body.appendChild(link);
 
@@ -177,13 +185,12 @@ function createButton(encodedUri){
     $('.toolbar').append(linkWrapper);
 }
 
-
-function fetchAndSetData(){
+function exportData(){
     var sitesData  = get_data_by_sites();
     var sitesTotal = get_total_by_sites(sitesData);
     var rows       = get_data_as_rows(sitesTotal);
     var encodedUri = createCSV(rows);
-    createButton(encodedUri);
+    downloadCSV(encodedUri);
 }
 
 
@@ -200,9 +207,9 @@ function waitUntilExists(callback){
             for (var i = 0; i < mutation.addedNodes.length; i++) {
                 // do things to your newly added nodes here
                 var node = mutation.addedNodes[i];
-                if( !$(node).hasClass(selectors[0]) && !$(node).hasClass(selectors[1]) && !$(node).hasClass(selectors[2]) ){
+                /* if( !$(node).hasClass(selectors[0]) && !$(node).hasClass(selectors[1]) && !$(node).hasClass(selectors[2]) ){
                     continue;
-                }
+                } */
 
                 var elArr = []
 
@@ -272,13 +279,12 @@ function listenToChanges(callback){
         console.log('asdsadsadasd1132134');
         waitUntilExists(function(){
             console.log('sadfsfsdf25')
-            // fetchAndSetData();
+            drawButton();
         });
 
-        listenToChanges(function(){
-            console.log('sadfsfsdf34')
-            // fetchAndSetData();
-        })
+        $('#export-by-sites').on('click', function(){
+            exportData();
+        });
 
     });
 
