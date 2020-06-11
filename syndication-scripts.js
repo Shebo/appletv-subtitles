@@ -280,7 +280,9 @@ function listenToChanges(callback){
             drawButton();
         });
 
-        $('#export-by-sites').on('click', function(){
+        $('#export-by-sites').on('click', function(e){
+            e.stopPropagation();
+            e.preventDefault();
             exportData();
         });
 
