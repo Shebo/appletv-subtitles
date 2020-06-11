@@ -167,13 +167,20 @@ function downloadCSV(encodedUri){
     hiddenElement.click();
 }
 
+function exportData(){
+    var sitesData  = get_data_by_sites();
+    var sitesTotal = get_total_by_sites(sitesData);
+    var rows       = get_data_as_rows(sitesTotal);
+    var encodedUri = createCSV(rows);
+    downloadCSV(encodedUri);
+}
+
 function drawButton(){
     var link = document.createElement("a");
     link.innerHTML = 'Export By Sites';
     link.setAttribute("id", 'export-by-sites');
     link.setAttribute("class", 'btn btn-lg btn-primary');
     link.setAttribute("href", '');
-    link.setAttribute("download", "syndication_sites_totals_"+timestamp+".csv");
     document.body.appendChild(link);
 
     var linkWrapper = $("<div></div>").attr({
@@ -184,15 +191,6 @@ function drawButton(){
 
     $('.toolbar').append(linkWrapper);
 }
-
-function exportData(){
-    var sitesData  = get_data_by_sites();
-    var sitesTotal = get_total_by_sites(sitesData);
-    var rows       = get_data_as_rows(sitesTotal);
-    var encodedUri = createCSV(rows);
-    downloadCSV(encodedUri);
-}
-
 
 function waitUntilExists(callback){
 
