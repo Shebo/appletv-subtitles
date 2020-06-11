@@ -173,6 +173,8 @@ function exportData(){
     var rows       = get_data_as_rows(sitesTotal);
     var encodedUri = createCSV(rows);
     downloadCSV(encodedUri);
+
+    return true;
 }
 
 function drawButton(){
@@ -249,42 +251,15 @@ function waitUntilExists(callback){
     }
 }
 
-function listenToChanges(callback){
-    var observer = new MutationObserver(function(mutationRecords) {
-        console.info ("mutationHandler:");
-
-        mutationRecords.forEach ( function (mutation) {
-            console.log (mutation.type);
-
-            if (typeof mutation.removedNodes == "object") {
-                var jq = $(mutation.removedNodes);
-                console.log (jq);
-                console.log (jq.is("span.myclass2"));
-                console.log (jq.find("span") );
-            }
-        } );
-    });
-
-    $('.info-box').each ( function () {
-        observer.observe(this, {childList: true, characterData: true, attributes: true, subtree: true});
-    } );
-}
-
 (function($) {
 
     $(function() {
+        
+        // create button
+        waitUntilExists(drawButton);
 
-        console.log('asdsadsadasd1132134');
-        waitUntilExists(function(){
-            console.log('sadfsfsdf25')
-            drawButton();
-        });
-
-        $(document).on('click', '#export-by-sites', function(e){
-            exportData();
-        });
-
+        // listen to click
+        $(document).on('click', '#export-by-sites', exportData);
     });
-
 
 })(jQuery);
