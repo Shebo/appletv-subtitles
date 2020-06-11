@@ -189,11 +189,13 @@ function fetchAndSetData(){
 
 function waitUntilExists(callback){
 
-    selectors = ['.dataTable', '.info-box', '.main-footer'];
+    var selectors = ['.dataTable', '.info-box', '.main-footer'];
+
+    var done = false;
 
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
-            if (!mutation.addedNodes) return
+            if (!mutation.addedNodes || done) return
 
             for (var i = 0; i < mutation.addedNodes.length; i++) {
                 // do things to your newly added nodes here
@@ -212,8 +214,8 @@ function waitUntilExists(callback){
                 }
 
                 if( !elArr.length ){
-                    console.log(observer);
                     observer.disconnect();
+                    done = true;
                     callback();
                     break;
                 }
