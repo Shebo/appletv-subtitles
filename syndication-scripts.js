@@ -193,8 +193,10 @@ function waitUntilExists(callback){
 
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
+            console.log('printprint!!!');
             if (!mutation.addedNodes) return
 
+            console.log('existy111112!!!');
             for (var i = 0; i < mutation.addedNodes.length; i++) {
                 // do things to your newly added nodes here
                 var node = mutation.addedNodes[i];
@@ -217,18 +219,12 @@ function waitUntilExists(callback){
     if( !elArr.length ){
         callback();
     }else{
-        for (let i = 0; i < elArr.length; i++) {
-            console.log('testseste');
-            console.log(elArr[i]);
-            elArr[i].each ( function () {
-                observer.observe(document.body, {
-                    childList: true,
-                    subtree: true,
-                    attributes: false,
-                    characterData: false,
-                });
-            } );
-        }
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: false,
+            characterData: false,
+        });
     }
 }
 
