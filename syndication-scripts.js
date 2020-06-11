@@ -176,11 +176,11 @@ function exportData(){
 }
 
 function drawButton(){
-    var link = document.createElement("a");
+    var link = document.createElement("button");
     link.innerHTML = 'Export By Sites';
     link.setAttribute("id", 'export-by-sites');
     link.setAttribute("class", 'btn btn-lg btn-primary');
-    link.setAttribute("href", '');
+    link.setAttribute("type", 'button');
     document.body.appendChild(link);
 
     var linkWrapper = $("<div></div>").attr({
@@ -284,6 +284,7 @@ function listenToChanges(callback){
             e.stopPropagation();
             e.preventDefault();
             exportData();
+            return false;
         });
 
     });
