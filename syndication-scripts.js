@@ -109,7 +109,7 @@ function get_data_as_rows(sitesTotal){
 
     rows.push([
         'Site Name',
-        'Extracted Date',
+        'First Extracted Date',
         'Unique Reviews',
         'Reviews',
         'Items / Variants',
