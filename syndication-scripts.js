@@ -3,7 +3,7 @@ var cols = {
         val: 'string',
     },
     'Extracted Date': {
-        val: 'string',
+        val: 'date',
     },
     'Unique Reviews': {
         val: 'int',
@@ -86,6 +86,8 @@ function get_total_by_sites(sitesData){
                 if(Number.isNaN(line[colName])){
                     line[colName] = '-';
                 }
+            }else if(cols[colName].val == 'date'){
+                line[colName] = valArr.reduce(function(a, b) { return Date.parse(a) < Date.parse(b) ? a : b; });
             }
         }
 
@@ -107,6 +109,7 @@ function get_data_as_rows(sitesTotal){
 
     rows.push([
         'Site Name',
+        'Extracted Date',
         'Unique Reviews',
         'Reviews',
         'Items / Variants',
@@ -123,6 +126,7 @@ function get_data_as_rows(sitesTotal){
         const site = sitesTotal[i];
         rows.push([
             sitesTotal[i]['Site Name'],
+            sitesTotal[i]['Extracted Date'],
             sitesTotal[i]['Unique Reviews'],
             sitesTotal[i]['Reviews'],
             sitesTotal[i]['Items / Variants'],
@@ -254,7 +258,7 @@ function waitUntilExists(callback){
 (function($) {
 
     $(function() {
-        
+
         // create button
         waitUntilExists(drawButton);
 
